@@ -1,17 +1,17 @@
 import logging
 import time
-from random import random
 
 import pyautogui
 
 from as9.util.actions import ensure_touch_drive
 from as9.util.actions import open_free_pack
+from as9.util.actions import to_main_menu
+from as9.util.game_images import *
+from as9.util.screen_img import ScreenImg
 from as9.util.utils import ImageNotFound
-from as9.util.utils import click_image
-from as9.util.utils import find_image
 from as9.util.utils import repeat_nitro
+from as9.util.utils import scroll_horizontal
 from as9.util.utils import sleep
-from as9.util.utils import wait_for_image
 
 
 class Hunt:
@@ -20,45 +20,67 @@ class Hunt:
     hunt_image = ''
     car_image = ''
 
+    def __init__(self):
+        self.img_hunt = ScreenImg(self.hunt_image)
+        self.img_car = ScreenImg(self.car_image)
+
     def single_hunt(self, index: int):
         """Run the hunt"""
         raise NotImplementedError
 
-    def run_hunt(self):
+    def nav_to_hunt(self):
+        to_main_menu()
+        img_daily_events.search_for()
+        # Click twice to get into the events.
+        img_daily_events.click_result()
+        img_daily_events.click_result()
+
+        self.img_hunt.search_for()
+        if not self.img_hunt.is_above_threshold():
+            scroll_horizontal(right=True)
+            self.img_hunt.search_for()
+        if not self.img_hunt.is_above_threshold():
+            scroll_horizontal(right=True)
+            self.img_hunt.search_for()
+
+        self.img_hunt.raise_if_not_found()
+
+        # Must click twice to open the hunt page.
+        self.img_hunt.click_result()
+        self.img_hunt.click_result()
+
+    def loop_hunt(self, top_index: int):
         try:
-            for index in range(100):
-                logging.info(f"Starting hunt {index}")
-                if random() < 0.2:
-                    open_free_pack()
+            for index in range(500):
+                logging.info(f"Starting hunt {top_index}-{index}")
+                open_free_pack()
                 self.single_hunt(index)
         except ImageNotFound:
             logging.exception('Error in hunt.')
 
     def start_race(self, index: int):
-        click_image('race-button')
-        click_image(self.car_image)
+        img_race_button.search_and_click()
+        self.img_car.search_and_click()
 
-        if find_image('skip-button', min_conf=0.7)[0]:
+        if img_skip_button.search_for(max_seconds=2):
             sleep(self.wait_for_gas_minutes * 60, 'Waiting for gas')
 
         if index == 0:
             ensure_touch_drive()
 
-        click_image('play0-button')
+        img_play0_button.search_and_click()
 
-        if find_image('refill-tickets', min_conf=0.8)[0]:
-            click_image('close-button')
+        if img_refill_tickets.search_for(max_seconds=2):
+            img_close_button.search_and_click()
             sleep(self.ticket_refill_minutes * 60, 'Waiting for tickets')
-            click_image('play0-button')
+            img_play0_button.search_and_click()
 
     def collect_rewards(self):
-        wait_for_image('next-button', timeout_sec=20)
-        click_image('next-button')
-        click_image('next-button')
+        img_next_button.search_and_click(max_seconds=20)
+        img_next_button.search_and_click()
         time.sleep(2)
         pyautogui.press('space')
-        wait_for_image('grey-next-button', timeout_sec=10)
-        click_image('grey-next-button')
+        img_gray_next_button.search_and_click(max_seconds=10)
         logging.debug('Finished round')
 
 
@@ -86,8 +108,6 @@ class HuntH2(Hunt):
 
 class Hunt599xx(Hunt):
     hunt_image = 'hunt-599xx'
-    ticket_refill_minutes = 8
-    wait_for_gas_minutes = 11
     car_image = 'car-elise-220'
 
     def single_hunt(self, index: int):
@@ -103,7 +123,6 @@ class HuntTaycan(Hunt):
 
     def single_hunt(self, index: int):
         self.start_race(index)
-
         sleep(16)
         logging.debug('Orange Nitro')
         pyautogui.press('space')
@@ -113,14 +132,3 @@ class HuntTaycan(Hunt):
         pyautogui.press('space')
         sleep(35)
         self.collect_rewards()
-
-
-def grind():
-    logging.info("Starting grind")
-    click_image('race-button')
-    # ensure_touch_drive()
-    click_image('play0-button')
-    repeat_nitro(110)
-    wait_for_image('next-button', timeout_sec=60)
-    click_image('next-button')
-    click_image('next-button')
