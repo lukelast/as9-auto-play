@@ -24,7 +24,8 @@ def scroll_horizontal(right=True):
 
 def sleep(time_sec=3, msg=''):
     logging.debug(f'Sleeping for {time_sec} seconds. {msg}')
-    sleep_stage_sec = 4 * 60
+    # Ignore this for now and just let it disconnect.
+    sleep_stage_sec = 999 * 60
     if time_sec < sleep_stage_sec:
         time.sleep(time_sec)
     else:

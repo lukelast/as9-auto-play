@@ -21,8 +21,8 @@ class Hunt:
     car_image = ''
 
     def __init__(self):
-        self.img_hunt = ScreenImg(self.hunt_image)
-        self.img_car = ScreenImg(self.car_image)
+        self.img_hunt = ScreenImg(self.hunt_image, threshold=0.6)
+        self.img_car = ScreenImg(self.car_image, threshold=0.6)
 
     def single_hunt(self, index: int):
         """Run the hunt"""
@@ -78,9 +78,9 @@ class Hunt:
     def collect_rewards(self):
         img_next_button.search_and_click(max_seconds=20)
         img_next_button.search_and_click()
-        time.sleep(2)
+        time.sleep(3)
         pyautogui.press('space')
-        img_gray_next_button.search_and_click(max_seconds=10)
+        img_gray_next_button.search_and_click(max_seconds=20)
         logging.debug('Finished round')
 
 

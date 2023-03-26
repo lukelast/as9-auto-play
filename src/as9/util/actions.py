@@ -12,7 +12,7 @@ def ensure_touch_drive():
     # TODO just check for TD OFF with high confidence.
     img_td_on.search_for(max_seconds=1)
     img_td_off.search_for(max_seconds=1)
-    if img_td_off.best_confidence() > img_td_on.best_confidence():
+    if img_td_off.best_confidence_int() > img_td_on.best_confidence_int():
         logging.info("Touch drive is off. Turning on.")
         img_td_off.click_result()
 
