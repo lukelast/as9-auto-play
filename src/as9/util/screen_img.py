@@ -19,6 +19,7 @@ STANDARD_SCREEN_WIDTH = 3840
 class ScreenImg:
     DEBUG = True
     USE_GRAYSCALE = False
+    MIN_CONFIDENCE = 0.5
 
     def __init__(self, needle_img: str, threshold: float = 0.8):
         self.needle_img_name: str = needle_img
@@ -31,6 +32,7 @@ class ScreenImg:
         self.screenshot_rgb = None
         self.screenshot_gray = None
 
+        assert self.MIN_CONFIDENCE <= threshold <= 1.0
         self.threshold: float = threshold
         self.result_boxes: list[ResultBox] = []
 
@@ -38,8 +40,11 @@ class ScreenImg:
 
     def save_screen_to_file(self, msg: str = "screenshot"):
         self.render_results()
-        image_path = f"{CAPTURE_DIR}/{int(time.time())}-{self.needle_img_name}-{msg}-{self.best_confidence_int()}.jpg"
-        cv2.imwrite(image_path, self.screenshot_rgb)
+        image_path = f"{CAPTURE_DIR}/" \
+                     f"{int(time.time())}-{self.needle_img_name}-{msg}-{self.best_confidence_int()}.jpg"
+        half_size_rgb = cv2.resize(self.screenshot_rgb, None, fx=0.5, fy=0.5,
+                                   interpolation=cv2.INTER_AREA)
+        cv2.imwrite(image_path, half_size_rgb)
 
     def capture_screen(self):
         self.screenshot = None
@@ -93,7 +98,7 @@ class ScreenImg:
         else:
             match_template_result = cv2.matchTemplate(self.screenshot_rgb, self.needle_img_rgb, cv2.TM_CCOEFF_NORMED)
 
-        match_locations = np.where(match_template_result >= (self.threshold * 0.6))
+        match_locations = np.where(match_template_result >= self.MIN_CONFIDENCE)
 
         for (y, x) in zip(match_locations[0], match_locations[1]):
             confidence = match_template_result[y, x]

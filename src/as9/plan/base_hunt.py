@@ -17,16 +17,28 @@ from as9.util.utils import sleep
 class Hunt:
     ticket_refill_minutes = 20
     wait_for_gas_minutes = 60
-    hunt_image = ''
-    car_image = ''
 
-    def __init__(self):
+    def __init__(self, hunt_image: str, car_image: str = 'car-elise-220'):
+        self.hunt_index = 0
+        # The image name of the daily event.
+        self.hunt_image = hunt_image
+        # The image name of the car to use.
+        self.car_image = car_image
         self.img_hunt = ScreenImg(self.hunt_image, threshold=0.6)
         self.img_car = ScreenImg(self.car_image, threshold=0.6)
 
-    def single_hunt(self, index: int):
+    def single_hunt(self):
         """Run the hunt"""
-        raise NotImplementedError
+        self.hunt_index += 1
+        logging.info(f"Starting hunt {self.hunt_index}")
+        self.start_race()
+        sleep(12)
+        self.manage_race()
+        self.collect_rewards()
+
+    def manage_race(self):
+        """Perform actions during the actual race."""
+        repeat_nitro(45)
 
     def nav_to_hunt(self):
         to_main_menu()
@@ -49,23 +61,22 @@ class Hunt:
         self.img_hunt.click_result()
         self.img_hunt.click_result()
 
-    def loop_hunt(self, top_index: int):
+    def loop_hunt(self):
         try:
-            for index in range(500):
-                logging.info(f"Starting hunt {top_index}-{index}")
+            for _ in range(500):
                 open_free_pack()
-                self.single_hunt(index)
+                self.single_hunt()
         except ImageNotFound:
             logging.exception('Error in hunt.')
 
-    def start_race(self, index: int):
+    def start_race(self):
         img_race_button.search_and_click()
         self.img_car.search_and_click()
 
         if img_skip_button.search_for(max_seconds=2):
             sleep(self.wait_for_gas_minutes * 60, 'Waiting for gas')
 
-        if index == 0:
+        if self.hunt_index <= 1:
             ensure_touch_drive()
 
         img_play0_button.search_and_click()
@@ -85,45 +96,27 @@ class Hunt:
 
 
 class HuntGte(Hunt):
-    hunt_image = 'hunt-gte'
-    car_image = 'car-2017-nsx'
-
-    def single_hunt(self, index: int):
-        self.start_race(index)
-        sleep(12)
-        repeat_nitro(45)
-        self.collect_rewards()
+    def __init__(self):
+        super().__init__(hunt_image='hunt-gte',
+                         car_image='car-2017-nsx')
 
 
 class HuntH2(Hunt):
-    hunt_image = 'hunt-h2'
-    car_image = 'car-elise-220'
-
-    def single_hunt(self, index: int):
-        self.start_race(index)
-        sleep(10)
-        repeat_nitro(45)
-        self.collect_rewards()
+    def __init__(self):
+        super().__init__(hunt_image='hunt-h2')
 
 
 class Hunt599xx(Hunt):
-    hunt_image = 'hunt-599xx'
-    car_image = 'car-elise-220'
-
-    def single_hunt(self, index: int):
-        self.start_race(index)
-        sleep(10)
-        repeat_nitro(45)
-        self.collect_rewards()
+    def __init__(self):
+        super().__init__(hunt_image='hunt-599xx')
 
 
 class HuntTaycan(Hunt):
-    hunt_image = 'hunt-taycan'
-    car_image = 'car-elise-220'
+    def __init__(self):
+        super().__init__(hunt_image='hunt-taycan')
 
-    def single_hunt(self, index: int):
-        self.start_race(index)
-        sleep(16)
+    def manage_race(self):
+        sleep(4)
         logging.debug('Orange Nitro')
         pyautogui.press('space')
         pyautogui.press('space')
@@ -131,4 +124,3 @@ class HuntTaycan(Hunt):
         logging.debug('Yellow Nitro')
         pyautogui.press('space')
         sleep(35)
-        self.collect_rewards()

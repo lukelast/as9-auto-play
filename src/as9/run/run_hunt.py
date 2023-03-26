@@ -10,11 +10,11 @@ log_config()
 
 if __name__ == '__main__':
     sleep(10, "starting")
-    for idx in range(100):
+    hunt = HuntGte()
+    for _ in range(100):
         try:
-            hunt = HuntGte()
             hunt.nav_to_hunt()
-            hunt.loop_hunt(idx)
+            hunt.loop_hunt()
         except ImageNotFound:
             logging.exception('Error getting to hunt.')
             sleep(120, 'Waiting for error to resolve.')
