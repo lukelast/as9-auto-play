@@ -20,7 +20,7 @@ class ScreenImg:
     DEBUG = True
     USE_GRAYSCALE = False
 
-    def __init__(self, needle_img: str, threshold: float = 0.9):
+    def __init__(self, needle_img: str, threshold: float = 0.8):
         self.needle_img_name: str = needle_img
         self.needle_img_rgb = None
         self.needle_img_gray = None
