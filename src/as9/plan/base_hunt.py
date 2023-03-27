@@ -54,6 +54,12 @@ class Hunt:
         if not self.img_hunt.is_above_threshold():
             scroll_horizontal(right=True)
             self.img_hunt.search_for()
+        if not self.img_hunt.is_above_threshold():
+            scroll_horizontal(right=False)
+            self.img_hunt.search_for()
+        if not self.img_hunt.is_above_threshold():
+            scroll_horizontal(right=False)
+            self.img_hunt.search_for()
 
         self.img_hunt.raise_if_not_found()
 
