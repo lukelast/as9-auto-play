@@ -16,7 +16,7 @@ from as9.util.utils import sleep
 
 class Hunt:
     ticket_refill_minutes = 20
-    wait_for_gas_minutes = 60
+    wait_for_gas_minutes = 20
 
     def __init__(self, hunt_image: str, car_image: str = 'car-elise-220'):
         self.hunt_index = 0
@@ -99,6 +99,15 @@ class Hunt:
         pyautogui.press('space')
         img_gray_next_button.search_and_click(max_seconds=20)
         logging.debug('Finished round')
+
+
+class HuntNagari(Hunt):
+    def __init__(self):
+        super().__init__(hunt_image='hunt-nagari')
+
+    def manage_race(self):
+        logging.info("Start")
+        repeat_nitro(45, 6)
 
 
 class HuntGte(Hunt):
