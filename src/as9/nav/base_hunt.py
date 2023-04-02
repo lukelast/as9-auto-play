@@ -3,11 +3,11 @@ import time
 
 import pyautogui
 
-from as9.race.race_plan import run_race
-from as9.race.race_plan import to_the_docks
-from as9.util.actions import ensure_touch_drive
-from as9.util.actions import open_free_pack
-from as9.util.actions import to_main_menu
+from as9.race.race_runner import run_race
+from as9.race.plan.buenos_aires import to_the_docks
+from as9.nav.actions import ensure_touch_drive
+from as9.nav.actions import open_free_pack
+from as9.nav.actions import to_main_menu
 from as9.util.game_images import *
 from as9.util.screen_img import ScreenImg
 from as9.util.utils import ImageNotFound
@@ -17,8 +17,10 @@ from as9.util.utils import sleep
 
 
 class Hunt:
+    # 20 minutes, or 8 minutes with daily events bonus pass.
     ticket_refill_minutes = 20
-    wait_for_gas_minutes = 20
+    # 12 minutes for D with multiplayer pass. 15 minutes for D.
+    wait_for_gas_minutes = 15
 
     def __init__(self, hunt_image: str, car_image: str = 'car-elise-220'):
         self.hunt_index = 0
@@ -97,7 +99,7 @@ class Hunt:
             img_play0_button.search_and_click()
 
     def collect_rewards(self):
-        img_next_button.search_and_click(max_seconds=20)
+        img_next_button.search_and_click(max_seconds=30)
         img_next_button.search_and_click()
         time.sleep(3)
         pyautogui.press('space')

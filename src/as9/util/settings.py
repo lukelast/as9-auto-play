@@ -6,7 +6,10 @@ def current_hunt():
     from as9.nav.base_hunt import HuntNagari
     return HuntNagari()
 
-
-start_pause_sec = 4
-debug_save_ocr_images = True
 logging_level = logging.INFO
+start_pause_sec = 4
+debug_save_ocr_images = False
+debug_save_screen_images = True
+
+IMG_DIR = '../../../game-imgs'
+CAPTURE_DIR = '../../../captures'

@@ -8,7 +8,7 @@ import mss
 import numpy as np
 import pyscreeze
 
-from as9.util.constant import CAPTURE_DIR
+from as9.util.settings import CAPTURE_DIR
 from as9.util.settings import debug_save_ocr_images
 from as9.util.timer import Timer
 

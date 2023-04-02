@@ -2,7 +2,7 @@ import logging
 import sys
 import os
 import pyautogui
-from as9.util.constant import CAPTURE_DIR
+from as9.util.settings import CAPTURE_DIR
 from as9.util.settings import logging_level
 
 

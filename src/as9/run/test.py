@@ -3,8 +3,8 @@ import logging
 import mss as mss
 import pyscreeze
 
-from as9.race.race_plan import play_action
-from as9.race.race_plan import to_the_docks
+from as9.race.race_runner import play_action
+from as9.race.plan.buenos_aires import to_the_docks
 from as9.util.log import log_config
 from as9.race.race_progress import RaceProgress
 from as9.util.timer import Timer

@@ -1,9 +1,7 @@
 from random import random
 
-import pyautogui
-
-from as9.plan.mp import lose_race
-from as9.util.actions import open_free_pack
+from as9.nav.mp import lose_race
+from as9.nav.actions import open_free_pack
 from as9.util.log import log_config
 
 log_config()

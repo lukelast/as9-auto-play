@@ -4,7 +4,7 @@ import time
 import pyautogui
 import pyscreeze
 
-from as9.util.constant import CAPTURE_DIR
+from as9.util.settings import CAPTURE_DIR
 
 
 def scroll_horizontal(right=True):

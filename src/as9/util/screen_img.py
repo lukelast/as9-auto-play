@@ -7,8 +7,9 @@ import numpy as np
 import pyautogui
 import pyscreeze
 
-from as9.util.constant import CAPTURE_DIR
-from as9.util.constant import IMG_DIR
+from as9.util.settings import CAPTURE_DIR
+from as9.util.settings import IMG_DIR
+from as9.util.settings import debug_save_screen_images
 from as9.util.utils import ImageNotFound
 
 screen_width = pyscreeze.screenshot().width
@@ -17,7 +18,6 @@ STANDARD_SCREEN_WIDTH = 3840
 
 
 class ScreenImg:
-    DEBUG = True
     USE_GRAYSCALE = False
     MIN_CONFIDENCE = 0.5
 
@@ -28,7 +28,7 @@ class ScreenImg:
         self.needle_h = None
         self.needle_w = None
 
-        self.screenshot: PIL.Image.Image = None
+        self.screenshot: PIL.Image.Image
         self.screenshot_rgb = None
         self.screenshot_gray = None
 
@@ -83,11 +83,6 @@ class ScreenImg:
             cv2.rectangle(self.screenshot_rgb, (box.x, box.y), (box.x + box.width, box.y + box.height), color, 1)
             # print(f"Matching box at ({box.x}, {box.y}) with confidence level: {box.confidence}")
 
-    def display_result_window(self):
-        cv2.imshow("my img", self.screenshot_rgb)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-
     def _search(self):  # sourcery skip: raise-specific-error
         if self.screenshot_gray is None:
             raise Exception("Screenshot not captured")
@@ -136,9 +131,9 @@ class ScreenImg:
             self._search()
             if self.is_above_threshold():
                 logging.info(f"Found '{self.needle_img_name}' "
-                              f"with confidence {self.best_confidence_int()} "
-                              f"in {round(time.time() - start, ndigits=2)} seconds")
-                if self.DEBUG:
+                             f"with confidence {self.best_confidence_int()} "
+                             f"in {round(time.time() - start, ndigits=2)} seconds")
+                if debug_save_screen_images:
                     self.save_screen_to_file("found")
                 return True
             time.sleep(min(1.0, max(0.1, max_seconds / 20.0)))
@@ -146,7 +141,7 @@ class ScreenImg:
                      f"above confidence {self.threshold} "
                      f"within {round(time.time() - start, ndigits=2)} seconds "
                      f"found something @{self.best_confidence_int()}")
-        if self.DEBUG:
+        if debug_save_screen_images:
             self.save_screen_to_file("nope")
         return False
 
