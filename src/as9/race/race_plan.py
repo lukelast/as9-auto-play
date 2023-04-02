@@ -60,15 +60,15 @@ meiji_rush = {
 
 # Buenos Aires
 to_the_docks = {
-    # Initial left drift.
+    # Initial drift left.
     3: 'drift-start',
-    7: ('drift-stop', 'nitro2'),
+    8: ('drift-stop', 'nitro2'),
 
     # Nitro bottle
     11: 'left',
 
     # Switch to yellow nitro.
-    12: ('nitro-stop', 'nitro'),
+    13: ('nitro-stop', 'nitro'),
 
     # Double nitro bottle
     24: 'right',
@@ -82,7 +82,9 @@ to_the_docks = {
     46: 'drift-start',
     47: 'left',
     50: 'drift-stop',
-    # 51: 'nitro',
+
+    # In S road.
+    54: 'nitro2',
 
     # Left out of S
     57: 'drift-start',
@@ -97,10 +99,9 @@ to_the_docks = {
 
     # Slight right corner
     78: 'drift-start',
-    81: ('drift-stop', 'nitro2'),
+    82: ('drift-stop', 'nitro2'),
 
     # Final left corner
     84: 'drift-start',
     88: ('drift-stop', 'nitro2'),
-
 }
