@@ -135,7 +135,7 @@ class ScreenImg:
             self.capture_screen()
             self._search()
             if self.is_above_threshold():
-                logging.debug(f"Found '{self.needle_img_name}' "
+                logging.info(f"Found '{self.needle_img_name}' "
                               f"with confidence {self.best_confidence_int()} "
                               f"in {round(time.time() - start, ndigits=2)} seconds")
                 if self.DEBUG:

@@ -102,7 +102,7 @@ class Hunt:
         time.sleep(3)
         pyautogui.press('space')
         img_gray_next_button.search_and_click(max_seconds=20)
-        logging.debug('Finished round')
+        logging.info('Finished round')
 
 
 class HuntNagari(Hunt):
@@ -135,10 +135,10 @@ class HuntTaycan(Hunt):
 
     def manage_race(self):
         sleep(4)
-        logging.debug('Orange Nitro')
+        logging.info('Orange Nitro')
         pyautogui.press('space')
         pyautogui.press('space')
         sleep(11)
-        logging.debug('Yellow Nitro')
+        logging.info('Yellow Nitro')
         pyautogui.press('space')
         sleep(35)

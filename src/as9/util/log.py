@@ -3,10 +3,11 @@ import sys
 import os
 import pyautogui
 from as9.util.constant import CAPTURE_DIR
+from as9.util.settings import logging_level
 
 
 def log_config():
-    logging.basicConfig(level=logging.DEBUG,
+    logging.basicConfig(level=logging_level,
                         format='%(asctime)s %(levelname)s %(message)s',
                         datefmt='%H:%M:%S',
                         stream=sys.stdout)

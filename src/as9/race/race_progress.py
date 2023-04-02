@@ -61,9 +61,11 @@ class RaceProgress:
         elif new_percent == self.race_percent:
             pass  # No change
         elif new_percent == 0 and self.race_percent > 0:
-            logging.warning("Failed to read percent. Ignoring.")
+            logging.debug("Was unable to read race progress percent.")
         elif new_percent < self.race_percent:
-            logging.warning(f"Got {new_percent} which is lower than {self.race_percent}")
+            # After we hit 99 the screen animates, and we get garbage results.
+            if self.race_percent != 99:
+                logging.warning(f"Got {new_percent} which is lower than {self.race_percent}")
         elif new_percent > self.race_percent >= new_percent - self.max_jump:
             increase = new_percent - self.race_percent
             result = list(range(self.race_percent + 1, self.race_percent + increase + 1))
@@ -79,25 +81,11 @@ class RaceProgress:
         start_time = time.time()
         with Timer() as screenshot_timer:
             screenshot = self._screenshot_mss()
-            #screenshot = self._screenshot()
+            # screenshot = self._screenshot()
             # screenshot = self._screenshot_from_img()
 
         with Timer() as ocr_timer:
-            # Use EasyOCR to detect text in the grayscale image
-            result = reader.readtext(screenshot, detail=0)
-
-        numbers = [''.join(char for char in item if char.isdigit()) for item in result]
-        # filter out empty strings
-        numbers = list(filter(None, numbers))
-
-        number = int(numbers[0]) if len(numbers) == 1 else ''
-        # if 3 digits, then the % was read as a number, so remove the last one
-        if len(str(number)) == 3:
-            number = str(number)[:-1]
-        try:
-            percent_found = int(number)
-        except ValueError:
-            percent_found = 0
+            percent_found = self._do_ocr(screenshot)
 
         if debug_save_ocr_images:
             _dir = f"{CAPTURE_DIR}/ocr"
@@ -111,7 +99,62 @@ class RaceProgress:
                       f"ocr took {ocr_timer()}, "
                       f"screenshot took {screenshot_timer()}.")
 
-        return min(99, percent_found)
+        return max(0, min(99, percent_found))
+
+    def _do_ocr(self, screenshot) -> int:
+        # Use EasyOCR to detect text in the grayscale image
+        raw_result = reader.readtext(screenshot, detail=0)
+        logging.debug(f"OCR result: {raw_result}")
+
+        # % is read as 9
+        # A 9 was read as g
+        # Strange values that have been seen.
+        # 198
+        # 990
+
+        words = [''.join(char for char in item if char.isdigit() or char == '%' or char == 'g')
+                 for item in raw_result]
+        # filter out empty strings
+        words = list(filter(None, words))
+
+        if not words:
+            return 0
+
+        if len(words) > 1:
+            logging.warning(f"Got more than 1 word from OCR: {words}. Raw result: {raw_result}")
+            return 0
+
+        word = words[0]
+        assert word
+        if len(word) >= 4:
+            logging.warning(f"too long: {word}. Raw result: {raw_result}")
+            return 0
+        # Assume any 'g' is a 9
+        word = word.replace('g', '9')
+        try:
+            if len(word) == 1:
+                # Not expected, maybe make this a warning and return 0?
+                return int(word)
+            elif len(word) == 2:
+                first, second = word
+                if second == '%':
+                    return int(first)
+                elif second == '9':
+                    # We have 2 digits ending in 9, without a %.
+                    # Most likely the % was read as 9.
+                    return int(first)
+                else:
+                    return int(word)
+            elif len(word) == 3:
+                first, second, third = word
+                if third == '%' or third == '9':
+                    return int(f"{first}{second}")
+        except ValueError:
+            logging.warning(f"Got non-digit: {word}. Raw result: {raw_result}")
+            return 0
+
+        logging.warning(f"Got unexpected word: {word}. Raw result: {raw_result}")
+        return 0
 
     def _screenshot(self):
         region = self.progress_region

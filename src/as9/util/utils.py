@@ -23,7 +23,7 @@ def scroll_horizontal(right=True):
 
 
 def sleep(time_sec=3, msg=''):
-    logging.debug(f'Sleeping for {time_sec} seconds. {msg}')
+    logging.info(f'Sleeping for {time_sec} seconds. {msg}')
     # Ignore this for now and just let it disconnect.
     sleep_stage_sec = 999 * 60
     if time_sec < sleep_stage_sec:
@@ -40,12 +40,12 @@ def sleep(time_sec=3, msg=''):
 
 
 def repeat_nitro(time_sec, nitro_every_sec=5):
-    logging.debug("Starting nitro repeat...")
+    logging.info("Starting nitro repeat...")
     start_time = time.time()
     while time.time() - start_time < time_sec:
         pyautogui.press('space')
         time.sleep(min(max(.5, time_sec - (time.time() - start_time)), nitro_every_sec))
-    logging.debug("Finished nitro repeat.")
+    logging.info("Finished nitro repeat.")
 
 
 def click_box(location: pyscreeze.Box, sleep_sec: int = 2):
