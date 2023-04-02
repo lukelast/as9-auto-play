@@ -2,3 +2,4 @@
 captures/
 errors/
 *.pyc
+.venv/

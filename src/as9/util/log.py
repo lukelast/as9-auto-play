@@ -12,4 +12,5 @@ def log_config():
                         stream=sys.stdout)
     if not os.path.exists(CAPTURE_DIR):
         os.makedirs(CAPTURE_DIR)
+        os.makedirs(f"{CAPTURE_DIR}/ocr")
     pyautogui.screenshot(f"{CAPTURE_DIR}/start.png")

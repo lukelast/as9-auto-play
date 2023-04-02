@@ -1,8 +1,6 @@
 import logging
-
+from as9.race.race_progress import RaceProgress
 import pyautogui
-
-from as9.util.race_progress import RaceProgress
 
 
 def run_race(plan, slow_computer=False):
@@ -11,7 +9,7 @@ def run_race(plan, slow_computer=False):
         # Run actions sooner if computer is slow.
         plan = {progress - 1: action for progress, action in plan.items()}
     while True:
-        result = progress.read_change()
+        result = progress.check_new_percent()
         if result == [-1]:
             logging.info("Race Over")
             break  # Race is over
@@ -69,42 +67,40 @@ to_the_docks = {
     # Nitro bottle
     11: 'left',
 
+    # Switch to yellow nitro.
     12: ('nitro-stop', 'nitro'),
 
     # Double nitro bottle
     24: 'right',
 
+    # Turn right.
     37: 'drift-start',
-    40: 'right',
-    41: ('drift-stop', 'nitro2'),
+    # Double nitro bottle on right.
+    41: ('right', 'drift-stop', 'nitro2'),
 
     # Left drift into S route
-    45: 'drift-start',
+    46: 'drift-start',
     47: 'left',
     50: 'drift-stop',
     # 51: 'nitro',
 
     # Left out of S
-    56: 'drift-start',
+    57: 'drift-start',
     59: ('drift-stop', 'nitro2'),
 
     # Slight right, see if we can skip the drift.
-    62: 'nitro-stop',
-    63: 'nitro',
-    # 65: 'drift-start',
-    # 67: 'drift-stop',
-    # 68: 'nitro2',
+    63: ('nitro-stop', 'nitro'),
 
     # Super sharp left corner
     68: 'drift-start',
-    72: ('drift-stop', 'nitro2'),
+    73: ('drift-stop', 'nitro2'),
 
     # Slight right corner
-    77: 'drift-start',
-    80: ('drift-stop', 'nitro2'),
+    78: 'drift-start',
+    81: ('drift-stop', 'nitro2'),
 
     # Final left corner
-    83: 'drift-start',
-    86: ('drift-stop', 'nitro2'),
+    84: 'drift-start',
+    88: ('drift-stop', 'nitro2'),
 
 }

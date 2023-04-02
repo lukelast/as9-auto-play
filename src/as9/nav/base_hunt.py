@@ -3,8 +3,8 @@ import time
 
 import pyautogui
 
-from as9.plan.race_plan import run_race
-from as9.plan.race_plan import to_the_docks
+from as9.race.race_plan import run_race
+from as9.race.race_plan import to_the_docks
 from as9.util.actions import ensure_touch_drive
 from as9.util.actions import open_free_pack
 from as9.util.actions import to_main_menu
@@ -34,7 +34,9 @@ class Hunt:
         self.hunt_index += 1
         logging.info(f"Starting hunt {self.hunt_index}")
         self.start_race()
-        sleep(12)
+        # Sleep through the loading screen.
+        # But never sleep past the start or else OCR will get behind.
+        sleep(10)
         self.manage_race()
         self.collect_rewards()
 
