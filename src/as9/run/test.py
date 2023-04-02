@@ -1,25 +1,43 @@
+import logging
+import string
+import time
+
+import cv2
+import numpy as np
+import pyautogui
+from easyocr import easyocr
+import pyscreeze
+
+from as9.plan.race_plan import meiji_rush
+from as9.plan.race_plan import play_action
+from as9.plan.race_plan import to_the_docks
+from as9.util.constant import CAPTURE_DIR
 from as9.util.log import log_config
+from as9.util.race_progress import RaceProgress
 from as9.util.screen_img import ScreenImg
+from as9.util.utils import sleep
 
 log_config()
 
 if __name__ == '__main__':
+    sleep(2)
 
-    img = ScreenImg(needle_img="test", threshold=0.8)
-    img.search_for()
-    img.save_screen_to_file()
-    img.click_result()
+    progress = RaceProgress()
+    plan = to_the_docks
 
-    exit(0)
+    while True:
+        result = progress.read_change()
+        if result == [-1]:
+            break  # Race is over
+        elif result:
+            logging.info(f"Perform actions on {result}")
+            for percent_step in result:
+                action = plan.get(percent_step, None)
+                if isinstance(action, tuple):
+                    for sub_action in action:
+                        play_action(sub_action)
+                elif action:
+                    play_action(action)
 
-
-    start = time.time()
-    for _ in range(10):
-        find_image('my-career', 0.6)
-    print(f"Duration: {time.time() - start} seconds")
-
-    # click_image_if_exists('my-career', 0.65)
-
-    # pyautogui.moveTo(x=1997, y=1886)
-    # scroll_horizontal(right=False)
-    # to_main_menu()
+    # pyautogui.screenshot(f"{CAPTURE_DIR}/race3.png")
+    # logging.info("snapped")

@@ -9,7 +9,7 @@ log_config()
 
 
 if __name__ == '__main__':
-    sleep(10, "starting")
+    sleep(6, "starting")
     hunt = HuntNagari()
     for _ in range(100):
         try:
