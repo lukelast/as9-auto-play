@@ -116,15 +116,15 @@ class ScreenImg:
     def click_result(self):
         self.raise_if_not_found()
         image_center = pyautogui.center(self.screeze_box())
-        logging.info(f"Clicking at {image_center}")
+        logging.debug(f"Clicking at {image_center}")
         pyautogui.click(image_center)
-        time.sleep(2)
+        time.sleep(1)
 
-    def search_and_click(self, max_seconds: float = 5):
+    def search_and_click(self, max_seconds: float = 6):
         self.search_for(max_seconds)
         self.click_result()
 
-    def search_for(self, max_seconds: float = 5) -> bool:
+    def search_for(self, max_seconds: float = 6) -> bool:
         start = time.time()
         while time.time() - start < max_seconds:
             self.capture_screen()

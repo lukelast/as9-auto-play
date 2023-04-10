@@ -3,9 +3,12 @@ import logging
 
 def current_hunt():
     """ Set what car hunt to run. """
-    from as9.nav.base_hunt import HuntNagari
-    return HuntNagari()
+    from as9.nav.hunts import Hunt003s
+    return Hunt003s()
 
+
+# 20 minutes, or 8 minutes with daily events bonus pass.
+hunt_ticket_wait_min = 20
 
 """ Main logging level. """
 logging_level = logging.INFO
@@ -15,7 +18,6 @@ start_pause_sec = 4
 
 debug_save_ocr_images = False
 debug_save_screen_images = True
-
 
 # Constants.
 IMG_DIR = '../../../game-imgs'

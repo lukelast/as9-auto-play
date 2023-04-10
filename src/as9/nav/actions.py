@@ -41,6 +41,6 @@ def to_main_menu():
     if img_exit_game.search_for(max_seconds=2):
         time.sleep(1)
         pyautogui.press('esc')
-    time.sleep(2)
+    time.sleep(1)
     if img_legend_pass.search_for():
         img_legend_pass.click_result()

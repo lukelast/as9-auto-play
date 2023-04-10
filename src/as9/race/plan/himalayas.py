@@ -1,0 +1,20 @@
+landslide = {
+    15: 'nitro2',
+    19: 'left',
+    21: 'nitro-stop',
+    33: 'left',
+    39: 'nitro2',  # First big jump
+    43: 'drift-start',
+    52: 'left',
+    55: ('drift-stop', 'nitro2'),
+    60: ('left', 'left'),
+    61: 'nitro-stop',
+    67: 'drift-start',
+    68: 'left',
+    74: 'left',
+    75: 'drift-stop',
+    76: 'nitro2',
+    84: 'right',
+    85: 'nitro-stop',
+    92: 'nitro2',
+}

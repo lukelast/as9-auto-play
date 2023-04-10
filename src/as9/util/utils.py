@@ -48,13 +48,6 @@ def repeat_nitro(time_sec, nitro_every_sec=5):
     logging.info("Finished nitro repeat.")
 
 
-def click_box(location: pyscreeze.Box, sleep_sec: int = 2):
-    image_center = pyautogui.center(location)
-    logging.info(f"Clicking at {image_center}")
-    pyautogui.click(image_center)
-    time.sleep(sleep_sec)
-
-
 class ImageNotFound(Exception):
     def __init__(self, message, image):
         self.message = message

@@ -3,13 +3,12 @@ import time
 
 import pyautogui
 
-from as9.race.race_runner import run_race
-from as9.race.plan.buenos_aires import to_the_docks
 from as9.nav.actions import ensure_touch_drive
 from as9.nav.actions import open_free_pack
 from as9.nav.actions import to_main_menu
 from as9.util.game_images import *
 from as9.util.screen_img import ScreenImg
+from as9.util.settings import hunt_ticket_wait_min
 from as9.util.utils import ImageNotFound
 from as9.util.utils import repeat_nitro
 from as9.util.utils import scroll_horizontal
@@ -17,19 +16,18 @@ from as9.util.utils import sleep
 
 
 class Hunt:
-    # 20 minutes, or 8 minutes with daily events bonus pass.
-    ticket_refill_minutes = 20
     # 12 minutes for D with multiplayer pass. 15 minutes for D.
     wait_for_gas_minutes = 15
 
     def __init__(self, hunt_image: str, car_image: str = 'car-elise-220'):
+        self.ticket_refill_minutes = hunt_ticket_wait_min
         self.hunt_index = 0
         # The image name of the daily event.
         self.hunt_image = hunt_image
         # The image name of the car to use.
         self.car_image = car_image
-        self.img_hunt = ScreenImg(self.hunt_image, threshold=0.6)
-        self.img_car = ScreenImg(self.car_image, threshold=0.6)
+        self.img_hunt = ScreenImg(self.hunt_image,  threshold=0.6)
+        self.img_car = ScreenImg(self.car_image, threshold=0.65)
 
     def single_hunt(self):
         """Run the hunt"""
@@ -53,19 +51,19 @@ class Hunt:
         img_daily_events.click_result()
         img_daily_events.click_result()
 
-        self.img_hunt.search_for()
+        self.img_hunt.search_for(max_seconds=2)
         if not self.img_hunt.is_above_threshold():
             scroll_horizontal(right=True)
-            self.img_hunt.search_for()
+            self.img_hunt.search_for(max_seconds=2)
         if not self.img_hunt.is_above_threshold():
             scroll_horizontal(right=True)
-            self.img_hunt.search_for()
+            self.img_hunt.search_for(max_seconds=2)
         if not self.img_hunt.is_above_threshold():
             scroll_horizontal(right=False)
-            self.img_hunt.search_for()
+            self.img_hunt.search_for(max_seconds=2)
         if not self.img_hunt.is_above_threshold():
             scroll_horizontal(right=False)
-            self.img_hunt.search_for()
+            self.img_hunt.search_for(max_seconds=2)
 
         self.img_hunt.raise_if_not_found()
 
@@ -106,41 +104,3 @@ class Hunt:
         img_gray_next_button.search_and_click(max_seconds=20)
         logging.info('Finished round')
 
-
-class HuntNagari(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-nagari')
-
-    def manage_race(self):
-        run_race(to_the_docks)
-
-
-class HuntGte(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-gte',
-                         car_image='car-2017-nsx')
-
-
-class HuntH2(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-h2')
-
-
-class Hunt599xx(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-599xx')
-
-
-class HuntTaycan(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-taycan')
-
-    def manage_race(self):
-        sleep(4)
-        logging.info('Orange Nitro')
-        pyautogui.press('space')
-        pyautogui.press('space')
-        sleep(11)
-        logging.info('Yellow Nitro')
-        pyautogui.press('space')
-        sleep(35)
