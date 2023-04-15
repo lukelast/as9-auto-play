@@ -2,7 +2,7 @@ import time
 
 import pyautogui
 
-from as9.nav.actions import ensure_touch_drive
+from as9.nav.navigation import ensure_touch_drive
 from as9.util.game_images import *
 from as9.util.utils import repeat_nitro
 

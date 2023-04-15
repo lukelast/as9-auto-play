@@ -17,7 +17,7 @@ def scroll_horizontal(right=True):
     offset = int(screen_width * .75)
     if right:
         offset *= -1
-    pyautogui.moveRel(xOffset=offset, yOffset=0, duration=1)
+    pyautogui.moveRel(xOffset=offset, yOffset=0, duration=0.5)
 
     pyautogui.mouseUp()
 

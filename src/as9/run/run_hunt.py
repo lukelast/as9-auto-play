@@ -11,7 +11,7 @@ log_config()
 if __name__ == '__main__':
     sleep(start_pause_sec, "starting")
     hunt = current_hunt()
-    for _ in range(100):
+    for _ in range(200):
         try:
             hunt.nav_to_hunt()
             hunt.loop_hunt()

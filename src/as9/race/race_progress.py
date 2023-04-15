@@ -38,6 +38,7 @@ class RaceProgress:
     max_jump = 6
 
     def __init__(self):
+        logging.info("Initializing race progress monitoring")
         self.race_percent = 0
         self.last_raw_read = 0
         self.progress_region = _find_progress_region()

@@ -1,4 +1,6 @@
 import logging
+import time
+
 from as9.race.race_progress import RaceProgress
 import pyautogui
 
@@ -8,7 +10,8 @@ def run_race(plan, slow_computer=False):
     if slow_computer:
         # Run actions sooner if computer is slow.
         plan = {progress - 1: action for progress, action in plan.items()}
-    while True:
+    start = time.perf_counter()
+    while time.perf_counter() - start < 300:
         result = progress.check_new_percent()
         if result == [-1]:
             logging.info("Race Over")

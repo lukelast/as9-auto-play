@@ -1,7 +1,7 @@
 from random import random
 
 from as9.nav.mp import lose_race
-from as9.nav.actions import open_free_pack
+from as9.nav.navigation import open_free_pack
 from as9.util.log import log_config
 
 log_config()
