@@ -1,4 +1,5 @@
 import logging
+import re
 import time
 from typing import Optional
 
@@ -17,19 +18,27 @@ from as9.util.utils import sleep
 
 
 class Hunt:
-    # 12 minutes for D with multiplayer pass. 15 minutes for D.
-    wait_for_gas_minutes = 15
 
-    def __init__(self, hunt_image: str, car1_img_name: str = 'car-elise-220'):
+    def __init__(self):
         self.ticket_refill_minutes = hunt_ticket_wait_min
+        # 12 minutes for D with multiplayer pass. 15 minutes for D.
+        self.wait_for_gas_minutes = 20
         self.hunt_index = 0
-        # The image name of the daily event.
-        self.hunt_image = hunt_image
+
         # The image name of the car to use.
-        self.car1_img_name = car1_img_name
-        self.img_hunt = ScreenImg(self.hunt_image,  threshold=0.6)
-        self.car1_img = ScreenImg(self.car1_img_name, threshold=0.7)
+        self.car1_img_name = 'car-elise-220'
+
+        # The image name of the daily event.
+        self.hunt = self.__class__.__name__
         self.car2_img: Optional[ScreenImg] = None
+
+        self.config()
+
+        self.img_hunt_event = ScreenImg(f"hunt/{self.hunt}", threshold=0.6)
+        self.car1_img = ScreenImg(self.car1_img_name, threshold=0.7)
+
+    def config(self):
+        pass
 
     def single_hunt(self):
         """Run the hunt"""
@@ -53,25 +62,25 @@ class Hunt:
         img_daily_events.click_result()
         img_daily_events.click_result()
 
-        self.img_hunt.search_for(max_seconds=2)
-        if not self.img_hunt.is_above_threshold():
+        self.img_hunt_event.search_for(max_seconds=2)
+        if not self.img_hunt_event.is_above_threshold():
             scroll_horizontal(right=True)
-            self.img_hunt.search_for(max_seconds=2)
-        if not self.img_hunt.is_above_threshold():
+            self.img_hunt_event.search_for(max_seconds=2)
+        if not self.img_hunt_event.is_above_threshold():
             scroll_horizontal(right=True)
-            self.img_hunt.search_for(max_seconds=2)
-        if not self.img_hunt.is_above_threshold():
+            self.img_hunt_event.search_for(max_seconds=2)
+        if not self.img_hunt_event.is_above_threshold():
             scroll_horizontal(right=False)
-            self.img_hunt.search_for(max_seconds=2)
-        if not self.img_hunt.is_above_threshold():
+            self.img_hunt_event.search_for(max_seconds=2)
+        if not self.img_hunt_event.is_above_threshold():
             scroll_horizontal(right=False)
-            self.img_hunt.search_for(max_seconds=2)
+            self.img_hunt_event.search_for(max_seconds=2)
 
-        self.img_hunt.raise_if_not_found()
+        self.img_hunt_event.raise_if_not_found()
 
         # Must click twice to open the hunt page.
-        self.img_hunt.click_result()
-        self.img_hunt.click_result()
+        self.img_hunt_event.click_result()
+        self.img_hunt_event.click_result()
 
     def loop_hunt(self):
         try:
@@ -88,7 +97,7 @@ class Hunt:
 
         if img_skip_button.search_for(max_seconds=2):
             if self.car2_img is None:
-                sleep(self.wait_for_gas_minutes * 60, 'Waiting for gas')
+                sleep(self.wait_for_gas_minutes * 60, 'Waiting for gas (no other car)')
             else:
                 pyautogui.press('esc')
                 select_car(self.car2_img)

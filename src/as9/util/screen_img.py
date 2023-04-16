@@ -18,7 +18,7 @@ STANDARD_SCREEN_WIDTH = 3840
 
 
 class ScreenImg:
-    USE_GRAYSCALE = False
+    USE_GRAYSCALE = True
     MIN_CONFIDENCE = 0.5
 
     def __init__(self, needle_img: str, threshold: float = 0.8):
@@ -118,7 +118,7 @@ class ScreenImg:
         image_center = pyautogui.center(self.screeze_box())
         logging.debug(f"Clicking at {image_center}")
         pyautogui.click(image_center)
-        time.sleep(1)
+        time.sleep(1.5)  # Wait for animations to finish.
 
     def search_and_click(self, max_seconds: float = 6):
         self.search_for(max_seconds)

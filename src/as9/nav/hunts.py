@@ -1,5 +1,6 @@
 import logging
 import pyautogui
+
 from as9.nav.base_hunt import Hunt
 from as9.race.plan.buenos_aires import to_the_docks
 from as9.race.plan.himalayas import landslide
@@ -8,27 +9,25 @@ from as9.util.screen_img import ScreenImg
 from as9.util.utils import sleep, repeat_nitro
 
 
-class HuntContinentalGt(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-continental-gt',
-                         car1_img_name='car-ap0')
-        self.car2_img = ScreenImg('car-488-gtb', threshold=0.7)
+class BentleyContinentalGtSpeed(Hunt):
+    def config(self):
+        self.car1_img_name = 'car-488-gtb'
+        self.car2_img = ScreenImg('car-asterion', threshold=0.7)
 
     def manage_race(self):
         repeat_nitro(48)
 
 
-class Hunt911Gt1(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-911-gt1',
-                         car1_img_name='car-2017-nsx')
+class Porsche911Gt1Evolution(Hunt):
+    def config(self):
+        self.car1_img_name = 'car-2017-nsx'
         self.wait_for_gas_minutes = 50
 
 
 class Hunt003s(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-scg-003s',
-                         car1_img_name='car-2017-nsx')
+    def config(self):
+        self.hunt = 'hunt-scg-003s'
+        self.car1_img_name = 'car-2017-nsx'
 
     def manage_race(self):
         # The NSX can just barely make it without a race plan.
@@ -37,32 +36,32 @@ class Hunt003s(Hunt):
 
 
 class HuntNagari(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-nagari')
+    def config(self):
+        self.hunt = 'hunt-nagari'
 
     def manage_race(self):
         run_race(to_the_docks)
 
 
 class HuntGte(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-gte',
-                         car1_img_name='car-2017-nsx')
+    def config(self):
+        self.hunt = 'hunt-gte'
+        self.car1_img_name = 'car-2017-nsx'
 
 
 class HuntH2(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-h2')
+    def config(self):
+        self.hunt = 'hunt-h2'
 
 
 class Hunt599xx(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-599xx')
+    def config(self):
+        self.hunt = '599xx'
 
 
 class HuntTaycan(Hunt):
-    def __init__(self):
-        super().__init__(hunt_image='hunt-taycan')
+    def config(self):
+        self.hunt = 'hunt-taycan'
 
     def manage_race(self):
         sleep(4)

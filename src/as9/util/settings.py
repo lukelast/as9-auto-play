@@ -3,8 +3,8 @@ import logging
 
 def current_hunt():
     """ Set what car hunt to run. """
-    from as9.nav.hunts import Hunt911Gt1
-    return Hunt911Gt1()
+    import as9.nav.hunts as hunts
+    return hunts.BentleyContinentalGtSpeed()
 
 
 # 20 minutes, or 8 minutes with daily events bonus pass.

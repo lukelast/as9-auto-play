@@ -4,7 +4,7 @@ import time
 import pyautogui
 
 from as9.util.game_images import *
-from as9.util.utils import sleep, scroll_horizontal, ImageNotFound
+from as9.util.utils import scroll_horizontal, ImageNotFound
 
 
 def ensure_touch_drive():
@@ -27,8 +27,7 @@ def open_free_pack():
     img_free_pack.click_result()
     img_open_free_pack.search_and_click()
     img_free_button.search_and_click()
-    sleep(5, "Cards displaying")
-    img_gray_next_button.search_and_click()
+    img_gray_next_button.search_and_click(max_seconds=10)
     img_back_button.search_and_click()
 
 
