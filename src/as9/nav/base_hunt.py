@@ -34,7 +34,7 @@ class Hunt:
 
         self.config()
 
-        self.img_hunt_event = ScreenImg(f"hunt/{self.hunt}", threshold=0.6)
+        self.img_hunt_event = ScreenImg(f"hunt/{self.hunt}", threshold=0.7)
         self.car1_img = ScreenImg(self.car1_img_name, threshold=0.7)
 
     def config(self):

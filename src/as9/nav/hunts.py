@@ -9,6 +9,27 @@ from as9.util.screen_img import ScreenImg
 from as9.util.utils import sleep, repeat_nitro
 
 
+class AstonMartinVictor(Hunt):
+    def config(self):
+        """
+        The requirement is 44s
+        488-gtb gets 42s using race plan.
+        berlinetta gets 43.2s using basic nitro.
+        asterion gets 42.3 using race plan.
+        ap0 gets 39.4 using race plan. Which gets first.
+        """
+        self.wait_for_gas_minutes = 40
+        self.car1_img_name = 'car-berlinetta'
+        self.car2_img = ScreenImg('car-488-gtb', threshold=0.7)
+
+    def manage_race(self):
+        run_race(to_the_docks)
+
+
+class Porsche718CaymanGt4Clubsport(Hunt):
+    pass
+
+
 class BentleyContinentalGtSpeed(Hunt):
     def config(self):
         self.car1_img_name = 'car-488-gtb'

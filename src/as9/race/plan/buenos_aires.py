@@ -41,6 +41,7 @@ to_the_docks = {
 
     # Slight right corner
     78: 'drift-start',
+    79: 'left',
     82: ('drift-stop', 'nitro2'),
 
     # Final left corner

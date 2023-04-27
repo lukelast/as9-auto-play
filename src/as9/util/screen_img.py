@@ -41,7 +41,7 @@ class ScreenImg:
     def save_screen_to_file(self, msg: str = "screenshot"):
         self.render_results()
         image_path = f"{CAPTURE_DIR}/" \
-                     f"{int(time.time())}-{self.needle_img_name}-{msg}-{self.best_confidence_int()}.jpg"
+                     f"{int(time.time())}-{self.needle_img_name.replace('/', '-')}-{msg}-{self.best_confidence_int()}.jpg"
         half_size_rgb = cv2.resize(self.screenshot_rgb, None, fx=0.5, fy=0.5,
                                    interpolation=cv2.INTER_AREA)
         cv2.imwrite(image_path, half_size_rgb)
