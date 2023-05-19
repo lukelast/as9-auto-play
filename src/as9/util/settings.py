@@ -4,11 +4,13 @@ import logging
 def current_hunt():
     """ Set what car hunt to run. """
     import as9.nav.hunts as hunts
-    return hunts.AstonMartinVictor()
+    return hunts.FerrariRoma()
 
 
 # 20 minutes, or 8 minutes with daily events bonus pass.
 hunt_ticket_wait_min = 8
+
+use_free_ticket_refill = True
 
 """ Main logging level. """
 logging_level = logging.INFO

@@ -51,7 +51,7 @@ def select_car(car_img: ScreenImg):
         car_img.click_result()
         return
 
-    for _ in range(15):
+    for _ in range(20):
         scroll_horizontal(right=False)
 
     for _ in range(25):

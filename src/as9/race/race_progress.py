@@ -112,6 +112,7 @@ class RaceProgress:
         # Strange values that have been seen.
         # 198
         # 990
+        # 100%
 
         words = [''.join(char for char in item if char.isdigit() or char == '%' or char == 'g')
                  for item in raw_result]
@@ -127,9 +128,6 @@ class RaceProgress:
 
         word = words[0]
         assert word
-        if len(word) >= 4:
-            logging.warning(f"too long: {word}. Raw result: {raw_result}")
-            return 0
         # Assume any 'g' is a 9
         word = word.replace('g', '9')
         try:
@@ -150,6 +148,11 @@ class RaceProgress:
                 first, second, third = word
                 if third == '%' or third == '9':
                     return int(f"{first}{second}")
+            elif len(word) == 4 and word == '100%':
+                return 100
+            else:
+                logging.warning(f"too long: {word}. Raw result: {raw_result}")
+                return 0
         except ValueError:
             logging.warning(f"Got non-digit: {word}. Raw result: {raw_result}")
             return 0

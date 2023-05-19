@@ -52,4 +52,4 @@ class ImageNotFound(Exception):
     def __init__(self, message, image):
         self.message = message
         self.image = image
-        pyscreeze.screenshot(f"{CAPTURE_DIR}/not-found-{image}.png")
+        pyscreeze.screenshot(f"{CAPTURE_DIR}/not-found-{image.replace('/', '-')}.png")

@@ -11,9 +11,10 @@ def lose_race():
     img_play_button.search_and_click()
     # click on the first car.
     time.sleep(1)
-    pyautogui.click(600, 600)
+    # 900 is top car. 1600 the bottom
+    pyautogui.click(800, 1600)
     ensure_touch_drive()
-    img_play_button.search_and_click()
+    img_play_race.search_and_click()
     repeat_nitro(120)
     img_next_button.search_and_click(max_seconds=120)
     img_next_button.search_and_click()

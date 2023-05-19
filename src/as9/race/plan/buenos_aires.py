@@ -2,18 +2,25 @@
 Calibrated for Elise 220.
 """
 to_the_docks = {
+    4: 'right',
+    9: 'right',
+    12: 'nitro2',
+    26: 'left',
+    29: 'nitro2',
+    33: 'nitro-stop',
+
     # Initial drift left.
-    3: 'drift-start',
-    8: ('drift-stop', 'nitro2'),
+    #3: 'drift-start',
+    #8: ('drift-stop', 'nitro2'),
 
     # Nitro bottle
-    11: 'left',
+    #11: 'left',
 
     # Switch to yellow nitro.
-    13: ('nitro-stop', 'nitro'),
+    #13: ('nitro-stop', 'nitro'),
 
     # Double nitro bottle
-    24: 'right',
+    #24: 'right',
 
     # Turn right.
     37: 'drift-start',
@@ -30,17 +37,18 @@ to_the_docks = {
 
     # Left out of S
     57: 'drift-start',
-    59: ('drift-stop', 'nitro2'),
+    59: ('drift-stop', 'nitro'),
+    62: 'nitro',  # Try for blue nitro.
 
     # Slight right, see if we can skip the drift.
-    63: ('nitro-stop', 'nitro'),
+    #63: ('nitro-stop', 'nitro'),
 
     # Super sharp left corner
     68: 'drift-start',
     73: ('drift-stop', 'nitro2'),
 
     # Slight right corner
-    78: 'drift-start',
+    77: 'drift-start',
     79: 'left',
     82: ('drift-stop', 'nitro2'),
 

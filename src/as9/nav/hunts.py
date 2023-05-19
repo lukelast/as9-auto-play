@@ -4,9 +4,31 @@ import pyautogui
 from as9.nav.base_hunt import Hunt
 from as9.race.plan.buenos_aires import to_the_docks
 from as9.race.plan.himalayas import landslide
+from as9.race.plan.paris import metro
 from as9.race.race_runner import run_race
 from as9.util.screen_img import ScreenImg
 from as9.util.utils import sleep, repeat_nitro
+
+
+class ArashAf8FalconEdition(Hunt):
+    def config(self):
+        self.car_class = 'C'
+
+
+class FerrariRoma(Hunt):
+    def config(self):
+        self.car_class = 'C'
+
+
+class LotusEliseSprint220(Hunt):
+    pass
+
+
+class BugattiEb110(Hunt):
+    def manage_race(self):
+        """Perform actions during the actual race."""
+        # repeat_nitro(50)
+        run_race(metro)
 
 
 class AstonMartinVictor(Hunt):
@@ -17,10 +39,12 @@ class AstonMartinVictor(Hunt):
         berlinetta gets 43.2s using basic nitro.
         asterion gets 42.3 using race plan.
         ap0 gets 39.4 using race plan. Which gets first.
+        revuelto
+        grand-sport
         """
         self.wait_for_gas_minutes = 40
-        self.car1_img_name = 'car-berlinetta'
-        self.car2_img = ScreenImg('car-488-gtb', threshold=0.7)
+        self.car_class = 'B'
+        # self.car_img_names = ['car-488-gtb']
 
     def manage_race(self):
         run_race(to_the_docks)
@@ -32,8 +56,7 @@ class Porsche718CaymanGt4Clubsport(Hunt):
 
 class BentleyContinentalGtSpeed(Hunt):
     def config(self):
-        self.car1_img_name = 'car-488-gtb'
-        self.car2_img = ScreenImg('car-asterion', threshold=0.7)
+        self.car_class = 'B'
 
     def manage_race(self):
         repeat_nitro(48)
@@ -41,14 +64,13 @@ class BentleyContinentalGtSpeed(Hunt):
 
 class Porsche911Gt1Evolution(Hunt):
     def config(self):
-        self.car1_img_name = 'car-2017-nsx'
-        self.wait_for_gas_minutes = 50
+        self.car_class = 'C'
 
 
 class Hunt003s(Hunt):
     def config(self):
         self.hunt = 'hunt-scg-003s'
-        self.car1_img_name = 'car-2017-nsx'
+        self.car_class = 'C'
 
     def manage_race(self):
         # The NSX can just barely make it without a race plan.
@@ -67,7 +89,7 @@ class HuntNagari(Hunt):
 class HuntGte(Hunt):
     def config(self):
         self.hunt = 'hunt-gte'
-        self.car1_img_name = 'car-2017-nsx'
+        self.car_class = 'C'
 
 
 class HuntH2(Hunt):

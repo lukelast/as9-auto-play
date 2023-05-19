@@ -15,10 +15,16 @@ img_next_button = ScreenImg('next-button')
 img_open_free_pack = ScreenImg('open-free-pack')
 # Low because the required tickets changes.
 img_play0_button = ScreenImg('play0-button', threshold=0.7)
+# Play a multiplayer race.
 img_play_button = ScreenImg('play-button')
+# Start an MP race.
+img_play_race = ScreenImg('play-race-button')
 img_race_button = ScreenImg('race-button')
 img_refill_tickets = ScreenImg('refill-tickets')
 img_skip_button = ScreenImg('skip-button')
 img_td_off = ScreenImg('td-off')
 img_td_on = ScreenImg('td-on')
 img_legend_showcase = ScreenImg('legend-showcase')
+# Be certain since this spends resources.
+img_ticket_free_refill = ScreenImg('ticket-free-refill', threshold=0.9)
+img_ready_to_claim = ScreenImg('ready-to-claim')
