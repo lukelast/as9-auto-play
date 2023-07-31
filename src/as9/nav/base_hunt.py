@@ -1,16 +1,14 @@
 import logging
-import re
 import time
-from typing import Optional
 
 import pyautogui
 
 from as9.nav.navigation import ensure_touch_drive, select_car, finish_race
-from as9.nav.navigation import open_free_pack
 from as9.nav.navigation import main_menu
+from as9.nav.navigation import open_free_pack
 from as9.util.game_images import *
 from as9.util.screen_img import ScreenImg
-from as9.util.settings import hunt_ticket_wait_min, use_free_ticket_refill
+from as9.util.settings import hunt_ticket_wait_min, use_free_ticket_refill, hunt_b_cars, hunt_c_cars, hunt_d_cars
 from as9.util.utils import ImageNotFound
 from as9.util.utils import repeat_nitro
 from as9.util.utils import scroll_horizontal
@@ -41,29 +39,11 @@ class Hunt:
         # If car class is set, then provide default cars.
         if not self.car_img_names:
             if self.car_class == 'D':
-                self.car_img_names = [
-                    'bp/ds-e-tense',
-                    'bp/elise-220',
-                    'bp/furai',
-                ]
+                self.car_img_names = hunt_d_cars
             elif self.car_class == 'C':
-                self.car_img_names = [
-                    'bp/2017-nsx',
-                    'bp/h2',
-                    'bp/599',
-                    'bp/viper-acr',
-                    'bp/eb110',
-                ]
+                self.car_img_names = hunt_c_cars
             elif self.car_class == 'B':
-                self.car_img_names = [
-                    'bp/488-gtb',
-                    'bp/asterion',
-                    'car/ap0',
-                    'bp/003s',
-                    'car/grand-sport',
-                    #'bp/berlinetta',
-                    #'car/revuelto',
-                ]
+                self.car_img_names = hunt_b_cars
 
         self.img_hunt_event = ScreenImg(f"hunt/{self.hunt}", threshold=0.7)
         self.car_images = [ScreenImg(name, threshold=0.8) for name in self.car_img_names]

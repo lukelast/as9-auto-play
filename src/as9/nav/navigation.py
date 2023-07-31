@@ -69,11 +69,12 @@ def finish_race(skip_rewards: bool = False):
     expect_rewards: Skip checking for rewards, to save time.
     """
     img_next_button.search_and_click(max_seconds=30)
+    time.sleep(1)
     img_next_button.search_and_click()
     # Wait for the rewards animation to start, then press space to skip it.
     time.sleep(2)
     pyautogui.press('space')
-    if img_gray_next_button.search_for(max_seconds=10):
+    if not skip_rewards and img_gray_next_button.search_for(max_seconds=10):
         img_gray_next_button.click_result()
     else:
         logging.info("Did not give rewards.")

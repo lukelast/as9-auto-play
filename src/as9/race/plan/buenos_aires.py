@@ -57,3 +57,27 @@ to_the_docks = {
     88: ('drift-stop', 'nitro2'),
 }
 
+crosstown = {
+    8: 'drift-start',
+    11: ('drift-stop', 'right'),
+    12: 'nitro2',
+    15: 'drift-start',
+    # Big jump
+    23: ('drift-stop', 'nitro2'),
+    27: 'nitro-stop',
+    # Jump out the stadium
+    44: 'nitro2',
+    51: 'drift-start',
+    54: ('right', 'drift-stop', 'nitro2'),
+    66: 'nitro2',
+    69: 'drift-start',
+    80: 'right',
+    82: 'drift-stop',
+    83: 'nitro2',
+
+
+
+
+
+}
+

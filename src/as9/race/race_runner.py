@@ -45,6 +45,14 @@ def play_action(action):
     elif action == "drift-stop":
         pyautogui.keyUp("s")
 
+    # Doesn't work.
+    elif action == "360":
+        pyautogui.keyDown("s")
+        pyautogui.keyUp("s")
+        time.sleep(.1)
+        pyautogui.keyDown("s")
+        pyautogui.keyUp("s")
+
     elif action == "left":
         pyautogui.press("a")
     elif action == "right":

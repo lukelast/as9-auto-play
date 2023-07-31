@@ -2,12 +2,79 @@ import logging
 import pyautogui
 
 from as9.nav.base_hunt import Hunt
-from as9.race.plan.buenos_aires import to_the_docks
+from as9.race.plan.auckland import straight_sprint
+from as9.race.plan.buenos_aires import to_the_docks, crosstown
+from as9.race.plan.caribbean import islet_race
 from as9.race.plan.himalayas import landslide
+from as9.race.plan.nevada import hairpin_sprint
+from as9.race.plan.osaka import rat_race
 from as9.race.plan.paris import metro
 from as9.race.race_runner import run_race
 from as9.util.screen_img import ScreenImg
 from as9.util.utils import sleep, repeat_nitro
+
+
+class ZondaHpBarchetta(Hunt):
+    def config(self):
+        self.car_class = 'B'
+
+    def manage_race(self):
+        run_race(straight_sprint)
+
+
+class MclarenElva(Hunt):
+    def config(self):
+        self.car_class = 'C'
+
+    def manage_race(self):
+        run_race(crosstown)
+
+
+class CorsaRrTurbo(Hunt):
+    def manage_race(self):
+        run_race(islet_race)
+
+
+class ApexAp0(Hunt):
+    def config(self):
+        self.car_class = 'C'
+
+    def manage_race(self):
+        run_race(rat_race)
+
+
+class PeugeotSr1(Hunt):
+    pass
+
+
+class FerrariMonzaSp1(Hunt):
+    def manage_race(self):
+        run_race(metro)
+
+
+class NioEp9(Hunt):
+    def config(self):
+        self.car_class = 'B'
+
+    def manage_race(self):
+        run_race(hairpin_sprint)
+
+
+class PorschePanameraTurboS(Hunt):
+    pass
+
+
+class mura(Hunt):
+    def manage_race(self):
+        repeat_nitro(44)
+
+
+class FordGtMk2(Hunt):
+    def config(self):
+        self.car_class = 'C'
+
+    def manage_race(self):
+        repeat_nitro(60)
 
 
 class ArashAf8FalconEdition(Hunt):

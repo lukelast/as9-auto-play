@@ -7,3 +7,14 @@ meiji_rush = {
     33: 'nitro-stop',
     34: 'nitro',
 }
+
+rat_race = {
+    20: 'nitro2',
+
+    50: 'drift-start',
+    55: 'drift-stop',
+    56: 'nitro2',
+    88: 'nitro2',
+    96: 'nitro2',
+
+}

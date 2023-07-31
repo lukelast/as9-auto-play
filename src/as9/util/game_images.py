@@ -25,6 +25,8 @@ img_skip_button = ScreenImg('skip-button')
 img_td_off = ScreenImg('td-off')
 img_td_on = ScreenImg('td-on')
 img_legend_showcase = ScreenImg('legend-showcase')
+img_snapdragon1 = ScreenImg('snapdragon1')
 # Be certain since this spends resources.
 img_ticket_free_refill = ScreenImg('ticket-free-refill', threshold=0.9)
 img_ready_to_claim = ScreenImg('ready-to-claim')
+img_quit_race = ScreenImg('quit-race')

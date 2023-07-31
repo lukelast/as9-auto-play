@@ -1,0 +1,16 @@
+straight_sprint = {
+    10: 'left',
+    15: 'nitro2',
+    25: 'nitro-stop',
+    31: 'nitro',
+    34: 'right',
+    44: 'drift-start',
+    51: 'drift-stop',
+    53: 'right',
+    58: 'nitro2',
+    68: 'nitro-stop',
+    78: 'drift-start',
+    84: 'drift-stop',
+    85: 'right',
+    88: 'nitro2',
+}

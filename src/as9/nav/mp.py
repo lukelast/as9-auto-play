@@ -10,11 +10,11 @@ from as9.util.utils import repeat_nitro
 def lose_race():
     img_play_button.search_and_click()
     # click on the first car.
-    time.sleep(1)
+    time.sleep(2)
     # 900 is top car. 1600 the bottom
-    pyautogui.click(800, 1600)
-    ensure_touch_drive()
+    pyautogui.click(800, 900)
+    time.sleep(2)
     img_play_race.search_and_click()
-    repeat_nitro(120)
-    img_next_button.search_and_click(max_seconds=120)
-    img_next_button.search_and_click()
+    time.sleep(45)
+    pyautogui.press('esc')
+    img_quit_race.search_and_click(max_seconds=10)
