@@ -14,3 +14,23 @@ straight_sprint = {
     85: 'right',
     88: 'nitro2',
 }
+
+side_view = {
+    9: 'nitro',
+    23: 'left',
+    31: 'left',
+    32: 'drift-start',
+    35: 'drift-stop',
+    36: 'nitro2',
+    40: 'nitro-stop',
+    41: 'nitro',
+    42: 'left',
+    54: 'left',
+    65: 'left',
+    68: 'nitro2',
+    74: 'nitro-stop',
+    75: 'nitro',
+    78: 'left',
+    86: 'drift-start',
+    89: ('drift-stop', 'nitro2'),
+}

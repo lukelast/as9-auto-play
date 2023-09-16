@@ -2,7 +2,7 @@ import logging
 import pyautogui
 
 from as9.nav.base_hunt import Hunt
-from as9.race.plan.auckland import straight_sprint
+from as9.race.plan.auckland import straight_sprint, side_view
 from as9.race.plan.buenos_aires import to_the_docks, crosstown
 from as9.race.plan.caribbean import islet_race
 from as9.race.plan.himalayas import landslide
@@ -12,6 +12,50 @@ from as9.race.plan.paris import metro
 from as9.race.race_runner import run_race
 from as9.util.screen_img import ScreenImg
 from as9.util.utils import sleep, repeat_nitro
+
+
+class AstonMartinOne77(Hunt):
+    def config(self):
+        self.car_class = 'C'
+
+    def manage_race(self):
+        repeat_nitro(50)
+
+
+class CorvetteC7R(Hunt):
+    def manage_race(self):
+        repeat_nitro(50)
+
+
+class ApolloIE(Hunt):
+    def config(self):
+        self.car_class = 'C'
+
+    def manage_race(self):
+        """Perform actions during the actual race."""
+        repeat_nitro(50)
+
+
+class RenaultTrezor(Hunt):
+    def manage_race(self):
+        repeat_nitro(60)
+
+
+class Bacalar(Hunt):
+    pass
+
+
+class NsxGt3Evo(Hunt):
+    def manage_race(self):
+        run_race(side_view)
+
+
+class D8Gto(Hunt):
+    pass
+
+
+class GinettaG60(Hunt):
+    pass
 
 
 class ZondaHpBarchetta(Hunt):

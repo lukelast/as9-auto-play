@@ -4,7 +4,7 @@ import logging
 def current_hunt():
     """ Set what car hunt to run. """
     import as9.nav.hunts as hunts
-    return hunts.ZondaHpBarchetta()
+    return hunts.AstonMartinOne77()
 
 
 # 20 minutes, or 8 minutes with daily events bonus pass.
