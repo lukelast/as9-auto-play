@@ -7,7 +7,7 @@ from as9.nav.navigation import ensure_touch_drive, select_car, finish_race
 from as9.nav.navigation import main_menu
 from as9.nav.navigation import open_free_pack
 from as9.util.game_images import *
-from as9.util.screen_img import ScreenImg
+from as9.util.needle_img import NeedleImg
 from as9.util.settings import hunt_ticket_wait_min, use_free_ticket_refill, hunt_b_cars, hunt_c_cars, hunt_d_cars
 from as9.util.utils import ImageNotFound
 from as9.util.utils import repeat_nitro
@@ -45,8 +45,8 @@ class Hunt:
             elif self.car_class == 'B':
                 self.car_img_names = hunt_b_cars
 
-        self.img_hunt_event = ScreenImg(f"hunt/{self.hunt}", threshold=0.7)
-        self.car_images = [ScreenImg(name, threshold=0.8) for name in self.car_img_names]
+        self.img_hunt_event = NeedleImg(f"hunt/{self.hunt}", threshold=0.7)
+        self.car_images = [NeedleImg(name, threshold=0.8) for name in self.car_img_names]
 
     def config(self):
         pass
@@ -150,4 +150,4 @@ class Car:
 
     def __init__(self, img_name: str):
         self.img_name = img_name
-        self.img = ScreenImg(self.img_name, threshold=0.7)
+        self.img = NeedleImg(self.img_name, threshold=0.7)

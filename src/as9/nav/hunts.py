@@ -10,8 +10,26 @@ from as9.race.plan.nevada import hairpin_sprint
 from as9.race.plan.osaka import rat_race
 from as9.race.plan.paris import metro
 from as9.race.race_runner import run_race
-from as9.util.screen_img import ScreenImg
+from as9.util.needle_img import NeedleImg
 from as9.util.utils import sleep, repeat_nitro
+
+
+class FordMustangMacheE1400(Hunt):
+    def manage_race(self):
+        run_race(metro)
+
+
+class ArtegaScaloSuperelletra(Hunt):
+    pass
+
+
+class ArashAf10(Hunt):
+    def config(self):
+        self.car_class = 'C'
+
+
+class BentleyContinentalGt3(Hunt):
+    pass
 
 
 class AstonMartinOne77(Hunt):

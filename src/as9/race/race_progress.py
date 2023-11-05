@@ -8,21 +8,14 @@ import mss
 import numpy as np
 import pyscreeze
 
+from as9.util.screen_capture import ScreenCapture
+from as9.util.screenshot import Screenshot
 from as9.util.settings import CAPTURE_DIR
 from as9.util.settings import debug_save_ocr_images
 from as9.util.timer import Timer
 
 # Initialize EasyOCR with English as the chosen language
 reader = easyocr.Reader(['en'])
-
-
-def _find_progress_region():
-    region = mss.mss().monitors[1]
-    region['left'] = int(region['width'] * 0.13)
-    region['top'] = int(region['height'] * 0.07)
-    region['width'] = int(region['width'] * 0.08)
-    region['height'] = int(region['height'] * 0.06)
-    return region
 
 
 class RaceProgress:
@@ -41,7 +34,11 @@ class RaceProgress:
         logging.info("Initializing race progress monitoring")
         self.race_percent = 0
         self.last_raw_read = 0
-        self.progress_region = _find_progress_region()
+        self.screen_capture = ScreenCapture()
+        self.screen_capture.region.adjust_left(0.13)
+        self.screen_capture.region.adjust_top(0.07)
+        self.screen_capture.region.adjust_width(0.08)
+        self.screen_capture.region.adjust_height(0.06)
 
     def check_new_percent(self) -> list[int]:
         """
@@ -81,19 +78,13 @@ class RaceProgress:
     def read_race_percent(self):
         start_time = time.time()
         with Timer() as screenshot_timer:
-            screenshot = self._screenshot_mss()
-            # screenshot = self._screenshot()
-            # screenshot = self._screenshot_from_img()
+            screenshot = self.screen_capture.screenshot()
 
         with Timer() as ocr_timer:
             percent_found = self._do_ocr(screenshot)
 
         if debug_save_ocr_images:
-            _dir = f"{CAPTURE_DIR}/ocr"
-            if not os.path.exists(_dir):
-                os.makedirs(_dir)
-            cv2.imwrite(f"{_dir}/{int(time.time())}-race-percent-crop-{percent_found}.png",
-                        screenshot)
+            screenshot.save("ocr", f"race-percent-crop-{percent_found}")
 
         total_ms = int((time.time() - start_time) * 1000)
         logging.debug(f"read {percent_found} in {total_ms} ms, "
@@ -102,9 +93,9 @@ class RaceProgress:
 
         return max(0, min(99, percent_found))
 
-    def _do_ocr(self, screenshot) -> int:
+    def _do_ocr(self, screenshot: Screenshot) -> int:
         # Use EasyOCR to detect text in the grayscale image
-        raw_result = reader.readtext(screenshot, detail=0)
+        raw_result = reader.readtext(screenshot.get_gray(), detail=0)
         logging.debug(f"OCR result: {raw_result}")
 
         # % is read as 9
@@ -159,29 +150,3 @@ class RaceProgress:
 
         logging.warning(f"Got unexpected word: {word}. Raw result: {raw_result}")
         return 0
-
-    def _screenshot(self):
-        region = self.progress_region
-        region_tuple = (region['left'], region['top'], region['width'], region['height'])
-        screenshot = pyscreeze.screenshot(region=region_tuple)
-        screen_np = np.array(screenshot)
-        gray = cv2.cvtColor(screen_np, cv2.COLOR_RGB2GRAY)
-        return gray
-
-    def _screenshot_mss(self):
-        with mss.mss() as sct:
-            screenshot = sct.grab(self.progress_region)
-        screenshot_np = np.array(screenshot)
-        screenshot_gray = cv2.cvtColor(screenshot_np, cv2.COLOR_BGRA2GRAY)
-        return screenshot_gray
-
-    def _screenshot_from_img(self):
-        region = self.progress_region
-        left = region['left']
-        top = region['top']
-        width = region['width']
-        height = region['height']
-        screen_np = cv2.imread(f"{CAPTURE_DIR}/race-4k.png")
-        gray = cv2.cvtColor(screen_np, cv2.COLOR_RGB2GRAY)
-        gray_cropped = gray[top:top + height, left:left + width]
-        return gray_cropped

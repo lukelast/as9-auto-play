@@ -46,7 +46,7 @@ def main_menu():
         img_legend_pass.click_result()
 
 
-def select_car(car_img: ScreenImg):
+def select_car(car_img: NeedleImg):
     if car_img.search_for():
         car_img.click_result()
         return

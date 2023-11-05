@@ -17,4 +17,6 @@ def lose_race():
     img_play_race.search_and_click()
     time.sleep(30)
     pyautogui.press('esc')
+    time.sleep(1)
     img_quit_race.search_and_click(max_seconds=10)
+    time.sleep(1)

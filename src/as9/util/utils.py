@@ -29,9 +29,9 @@ def sleep(time_sec=3, msg=''):
     if time_sec < sleep_stage_sec:
         time.sleep(time_sec)
     else:
-        from as9.util.screen_img import ScreenImg
-        img_chat_close = ScreenImg('chat-close')
-        img_chat_open = ScreenImg('chat-open')
+        from as9.util.needle_img import NeedleImg
+        img_chat_close = NeedleImg('chat-close')
+        img_chat_open = NeedleImg('chat-open')
         while time_sec > 0:
             img_chat_open.search_and_click()
             img_chat_close.search_and_click()

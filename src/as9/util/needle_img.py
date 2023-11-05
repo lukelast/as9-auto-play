@@ -17,7 +17,7 @@ screen_width = pyscreeze.screenshot().width
 STANDARD_SCREEN_WIDTH = 3840
 
 
-class ScreenImg:
+class NeedleImg:
     USE_GRAYSCALE = True
     MIN_CONFIDENCE = 0.5
 
